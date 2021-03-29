@@ -1,11 +1,9 @@
 package redistaskmgr
 
 import (
-	"github.com/golang/protobuf/proto"
-
-	"github.com/gomodule/redigo/redis"
-
 	"github.com/go-courier/mq"
+	"github.com/gomodule/redigo/redis"
+	"google.golang.org/protobuf/proto"
 )
 
 type RedisController interface {

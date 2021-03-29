@@ -37,18 +37,18 @@ var r = RedisOperatorFromPool(&redis.Pool{
 })
 
 func init() {
-	taskMgr.Destroy(channel)
+	_ = taskMgr.Destroy(channel)
 }
 
 func BenchmarkTaskMgr(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		taskMgr.Push(channel, mq.NewTask("TEST", nil, fmt.Sprintf("%d", i)))
-		taskMgr.Shift(channel)
+		_ = taskMgr.Push(channel, mq.NewTask("TEST", nil, fmt.Sprintf("%d", i)))
+		_, _ = taskMgr.Shift(channel)
 	}
 }
 
 func TestSingle(t *testing.T) {
-	taskMgr.Push(channel, mq.NewTask("TEST", nil, "11"))
+	_ = taskMgr.Push(channel, mq.NewTask("TEST", nil, "11"))
 	task, err := taskMgr.Shift(channel)
 
 	NewWithT(t).Expect(err).To(BeNil())
@@ -64,11 +64,11 @@ func TestTaskMgr(t *testing.T) {
 	n := 1000
 
 	for i := 0; i < n; i++ {
-		taskMgr.Push(channel, mq.NewTask("TEST", nil, fmt.Sprintf("%d", i)))
-		taskMgr.Push(channel, mq.NewTask("TEST", nil, fmt.Sprintf("%d", i)))
-		taskMgr.Push(channel, mq.NewTask("TEST", nil, fmt.Sprintf("%d", i)))
-		taskMgr.Push(channel, mq.NewTask("TEST", nil, fmt.Sprintf("%d", i)))
-		taskMgr.Push(channel, mq.NewTask("TEST", nil, fmt.Sprintf("%d", i)))
+		_ = taskMgr.Push(channel, mq.NewTask("TEST", nil, fmt.Sprintf("%d", i)))
+		_ = taskMgr.Push(channel, mq.NewTask("TEST", nil, fmt.Sprintf("%d", i)))
+		_ = taskMgr.Push(channel, mq.NewTask("TEST", nil, fmt.Sprintf("%d", i)))
+		_ = taskMgr.Push(channel, mq.NewTask("TEST", nil, fmt.Sprintf("%d", i)))
+		_ = taskMgr.Push(channel, mq.NewTask("TEST", nil, fmt.Sprintf("%d", i)))
 	}
 
 	wg := sync.WaitGroup{}

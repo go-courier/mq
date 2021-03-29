@@ -48,9 +48,9 @@ func NewJobWorker(taskMgr TaskMgr, opts JobWorkerOpts) *JobWorker {
 
 type JobWorker struct {
 	JobWorkerOpts
-	operators sync.Map
-	taskMgr   TaskMgr
-	worker    *worker.Worker
+	operators       sync.Map
+	taskMgr         TaskMgr
+	worker          *worker.Worker
 	contextInjector func(ctx context.Context) context.Context
 }
 
@@ -69,11 +69,15 @@ func (w *JobWorker) getOperatorMeta(typ string) (*courier.OperatorMeta, error) {
 	return op.(*courier.OperatorMeta), nil
 }
 
-func (s JobWorker) WithContextInjector(contextInjector func(ctx context.Context) context.Context) *JobWorker {
-	s.contextInjector = contextInjector
-	return &s
+func (w *JobWorker) WithContextInjector(contextInjector func(ctx context.Context) context.Context) *JobWorker {
+	return &JobWorker{
+		JobWorkerOpts:   w.JobWorkerOpts,
+		operators:       sync.Map{},
+		taskMgr:         w.taskMgr,
+		worker:          w.worker,
+		contextInjector: contextInjector,
+	}
 }
-
 
 func (w *JobWorker) Serve(router *courier.Router) error {
 	w.Register(router)

@@ -35,8 +35,8 @@ var r = redistaskmgr.RedisOperatorFromPool(&redis.Pool{
 })
 
 func init() {
-	taskMgr.Destroy(channel)
-	taskMgrRedis.Destroy(channel)
+	_ = taskMgr.Destroy(channel)
+	_ = taskMgrRedis.Destroy(channel)
 }
 
 type A struct {
@@ -73,8 +73,8 @@ func TestJobQueue(t *testing.T) {
 
 		for i := 0; i < n; i++ {
 			for j := 0; j < 5; j++ {
-				jobBoard.Dispatch("TEST", mq.NewTask("A", []byte("A"), fmt.Sprintf("A%d", i)))
-				jobBoard.Dispatch("TEST", mq.NewTask("B", []byte("B"), fmt.Sprintf("B%d", i)))
+				_ = jobBoard.Dispatch("TEST", mq.NewTask("A", []byte("A"), fmt.Sprintf("A%d", i)))
+				_ = jobBoard.Dispatch("TEST", mq.NewTask("B", []byte("B"), fmt.Sprintf("B%d", i)))
 			}
 		}
 
@@ -96,7 +96,7 @@ func TestJobQueue(t *testing.T) {
 
 		time.Sleep(400 * time.Millisecond)
 		p, _ := os.FindProcess(os.Getpid())
-		p.Signal(os.Interrupt)
+		_ = p.Signal(os.Interrupt)
 
 		time.Sleep(500 * time.Millisecond)
 	}

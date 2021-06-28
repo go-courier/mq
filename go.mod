@@ -9,5 +9,5 @@ require (
 	github.com/google/uuid v1.1.1
 	github.com/onsi/gomega v1.10.1
 	github.com/stretchr/testify v1.5.1
-	google.golang.org/protobuf v1.26.0
+	google.golang.org/protobuf v1.27.0
 )

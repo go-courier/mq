@@ -8,6 +8,6 @@ require (
 	github.com/gomodule/redigo v1.8.4
 	github.com/google/uuid v1.1.1
 	github.com/onsi/gomega v1.10.1
-	github.com/stretchr/testify v1.5.1
+	github.com/stretchr/testify v1.7.4
 	google.golang.org/protobuf v1.26.0
 )
